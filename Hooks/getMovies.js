@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import utils from "../utility/utils";
+import client from "../api/client";
 import {
   ActivityIndicator,
   Alert,
@@ -6,17 +8,9 @@ import {
   SafeAreaView,
   StyleSheet,
 } from "react-native";
-import * as Animatable from "react-native-animatable";
-import Constants from "expo-constants";
-//import { LinearGradient } from "expo-linear-gradient";
-import utils from "./utility/utils";
+import AppHeader from "../Components/AppHeader";
 
-import client from "./api/client";
-import AppHeader from "./Components/AppHeader";
-
-import MovieInfo from "./Components/MovieInfo";
-
-export default function App() {
+const getMovies = () => {
   const [title, setTitle] = useState("");
   const [rtRating, setRtRating] = useState("");
   const [imdbRating, setImdbRating] = useState("");
@@ -32,6 +26,7 @@ export default function App() {
   const getMovieInfo = async (name) => {
     try {
       setLoading(true);
+
       const { data } = await client.get(name);
       const movieInfo = await data;
       setLoading(false);
@@ -68,58 +63,21 @@ export default function App() {
     setImdbRating(imdbRating);
     setStoryLine(movieInfo.Plot);
   };
+};
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <Animatable.View animation="fadeIn" duration={3000}>
-        <AppHeader
-          value={movieTitle}
-          onChangeText={(title) => setMovieTitle(title)}
-          getMovieInfo={() => getMovieInfo(movieTitle)}
-        />
-
-        <ImageBackground
-          source={require("./assets/background.jpg")}
-          style={styles.imgContainer}
-        >
-          <ActivityIndicator color="#FF9F00" size="large" animating={loading} />
-          {title != "" && (
-            <MovieInfo
-              imdbRating={imdbRating}
-              rtRating={rtRating}
-              title={title}
-              poster={poster}
-              storyLine={storyLine}
-              type={type}
-              year={year}
-              genre={genre}
-              time={time}
-            />
-          )}
-        </ImageBackground>
-      </Animatable.View>
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: "black",
-  },
-  imgContainer: {
-    height: "100%",
-    width: "100%",
-  },
-});
-
-{
-  /* <LinearGradient
-colors={["#000000", "#212121", "#2C5364"]}
-style={styles.container}
-start={{ x: 0.99, y: 0.8 }}
->
-
-</LinearGradient> */
-}
+export default {
+  title,
+  rtRating,
+  imdbRating,
+  poster,
+  movieTitle,
+  setMovieTitle,
+  storyLine,
+  type,
+  year,
+  genre,
+  time,
+  loading,
+  getMovieInfo,
+  getMovies,
+};
