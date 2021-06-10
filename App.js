@@ -107,6 +107,11 @@ export default function App() {
     setStoryLine(movieInfo.Plot);
   };
 
+  const selectMovieFromTrending = (id) => {
+    const { title } = trendingMovies.find((movie) => movie.id == id);
+    getMovieInfo(title);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Animatable.View animation="fadeIn" duration={3000}>
@@ -122,7 +127,10 @@ export default function App() {
         >
           <ActivityIndicator color="#FF9F00" size="large" animating={loading} />
           {title == "" ? (
-            <MovieTrending trending={trendingMovies} />
+            <MovieTrending
+              trending={trendingMovies}
+              onSelectMovie={selectMovieFromTrending}
+            />
           ) : (
             <MovieInfo
               imdbRating={imdbRating}

@@ -3,7 +3,7 @@ import { StyleSheet, Image, TouchableOpacity } from "react-native";
 
 function Movie({ poster, onSelectMovie }) {
   return (
-    <TouchableOpacity style={styles.imgContainer} onSelectMovie={onSelectMovie}>
+    <TouchableOpacity style={styles.imgContainer} onPress={onSelectMovie}>
       <Image
         source={{ uri: poster }}
         style={styles.poster}

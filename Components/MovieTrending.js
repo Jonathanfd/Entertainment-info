@@ -2,8 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text, FlatList, Image } from "react-native";
 import Movie from "./Movie";
 
-function MovieTrending({ trending }) {
-  console.log(trending);
+function MovieTrending({ trending, onSelectMovie }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Trending</Text>
@@ -11,7 +10,12 @@ function MovieTrending({ trending }) {
         data={trending}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => {
-          return <Movie poster={item.poster} />;
+          return (
+            <Movie
+              poster={item.poster}
+              onSelectMovie={() => onSelectMovie(item.id)}
+            />
+          );
         }}
         horizontal
       />
