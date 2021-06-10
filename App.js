@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -15,6 +15,39 @@ import client from "./api/client";
 import AppHeader from "./Components/AppHeader";
 
 import MovieInfo from "./Components/MovieInfo";
+import MovieTrending from "./Components/MovieTrending";
+const listOfMoviesTrending = [
+  {
+    id: 1,
+    title: "Soul",
+    poster:
+      "https://m.media-amazon.com/images/M/MV5BZGE1MDg5M2MtNTkyZS00MTY5LTg1YzUtZTlhZmM1Y2EwNmFmXkEyXkFqcGdeQXVyNjA3OTI0MDc@._V1_SX300.jpg",
+  },
+  {
+    id: 2,
+    title: "1917",
+    poster:
+      "https://m.media-amazon.com/images/M/MV5BOTdmNTFjNDEtNzg0My00ZjkxLTg1ZDAtZTdkMDc2ZmFiNWQ1XkEyXkFqcGdeQXVyNTAzNzgwNTg@._V1_SX300.jpg",
+  },
+  {
+    id: 3,
+    title: "Us",
+    poster:
+      "https://m.media-amazon.com/images/M/MV5BZTliNWJhM2YtNDc1MC00YTk1LWE2MGYtZmE4M2Y5ODdlNzQzXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_SX300.jpg",
+  },
+  {
+    id: 4,
+    title: "Joker",
+    poster:
+      "https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg",
+  },
+  {
+    id: 5,
+    title: "Ferry",
+    poster:
+      "https://m.media-amazon.com/images/M/MV5BZThhNWM2Y2ItMDRkOC00MWEyLTg5YmItMThkMzRjYjA3Mzk4XkEyXkFqcGdeQXVyMTEzMTI1Mjk3._V1_SX300.jpg",
+  },
+];
 
 export default function App() {
   const [title, setTitle] = useState("");
@@ -28,6 +61,11 @@ export default function App() {
   const [year, setYear] = useState("");
   const [genre, setGenre] = useState("");
   const [time, setTime] = useState("");
+  const [trendingMovies, setTrending] = useState([]);
+
+  useEffect(() => {
+    setTrending(listOfMoviesTrending);
+  }, []);
 
   const getMovieInfo = async (name) => {
     try {
@@ -83,7 +121,9 @@ export default function App() {
           style={styles.imgContainer}
         >
           <ActivityIndicator color="#FF9F00" size="large" animating={loading} />
-          {title != "" && (
+          {title == "" ? (
+            <MovieTrending trending={trendingMovies} />
+          ) : (
             <MovieInfo
               imdbRating={imdbRating}
               rtRating={rtRating}
