@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Image, TouchableOpacity } from "react-native";
 
-function Movie({ poster, onSelectMovie }) {
+import MovieFromTrending from "../utility/context";
+
+function Movie({ movie }) {
+  const movieFromTrendingFunction = useContext(MovieFromTrending);
   return (
-    <TouchableOpacity style={styles.imgContainer} onPress={onSelectMovie}>
+    <TouchableOpacity
+      style={styles.imgContainer}
+      onPress={() =>
+        movieFromTrendingFunction.selectMovieFromTrending(movie.id)
+      }
+    >
       <Image
-        source={{ uri: poster }}
+        source={{ uri: movie.poster }}
         style={styles.poster}
         resizeMode="cover"
       />

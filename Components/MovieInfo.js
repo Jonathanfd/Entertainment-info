@@ -16,7 +16,11 @@ function MovieInfo(props) {
   } = props;
 
   return (
-    <Animatable.View style={{ flex: 1 }} animation="fadeIn" duration={2000}>
+    <Animatable.View
+      style={{ flex: 1, height: "100%" }}
+      animation="fadeIn"
+      duration={2000}
+    >
       <View style={styles.imgContainer}>
         {poster && poster != "N/A" ? (
           <Image
@@ -95,6 +99,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 10,
+    margin: 10,
   },
   subTitle: {
     color: "white",

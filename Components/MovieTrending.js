@@ -1,29 +1,25 @@
 import React from "react";
-import { View, StyleSheet, Text, FlatList, Image } from "react-native";
+import { View, StyleSheet, Text, FlatList } from "react-native";
 import Movie from "./Movie";
 
-function MovieTrending({ trending, onSelectMovie }) {
+function MovieTrending({ trending }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Trending</Text>
-      <FlatList
-        data={trending}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => {
-          return (
-            <Movie
-              poster={item.poster}
-              onSelectMovie={() => onSelectMovie(item.id)}
-            />
-          );
-        }}
-        horizontal
-      />
+      <View>
+        <FlatList
+          data={trending}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => {
+            return <Movie movie={item} />;
+          }}
+          horizontal
+        />
+      </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
-  container: {},
   title: {
     color: "white",
     fontSize: 35,

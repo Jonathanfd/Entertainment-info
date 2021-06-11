@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -10,12 +10,12 @@ import * as Animatable from "react-native-animatable";
 import Constants from "expo-constants";
 //import { LinearGradient } from "expo-linear-gradient";
 import utils from "./utility/utils";
-
 import client from "./api/client";
 import AppHeader from "./Components/AppHeader";
-
 import MovieInfo from "./Components/MovieInfo";
 import MovieTrending from "./Components/MovieTrending";
+import MovieFromTrending from "./utility/context";
+
 const listOfMoviesTrending = [
   {
     id: 1,
@@ -113,40 +113,43 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Animatable.View animation="fadeIn" duration={3000}>
-        <AppHeader
-          value={movieTitle}
-          onChangeText={(title) => setMovieTitle(title)}
-          getMovieInfo={() => getMovieInfo(movieTitle)}
-        />
+    <MovieFromTrending.Provider value={{ selectMovieFromTrending }}>
+      <SafeAreaView style={styles.container}>
+        <Animatable.View animation="fadeIn" duration={3000}>
+          <AppHeader
+            value={movieTitle}
+            onChangeText={(title) => setMovieTitle(title)}
+            getMovieInfo={() => getMovieInfo(movieTitle)}
+          />
 
-        <ImageBackground
-          source={require("./assets/background.jpg")}
-          style={styles.imgContainer}
-        >
-          <ActivityIndicator color="#FF9F00" size="large" animating={loading} />
-          {title == "" ? (
-            <MovieTrending
-              trending={trendingMovies}
-              onSelectMovie={selectMovieFromTrending}
+          <ImageBackground
+            source={require("./assets/background.jpg")}
+            style={styles.imgContainer}
+          >
+            <ActivityIndicator
+              color="#FF9F00"
+              size="large"
+              animating={loading}
             />
-          ) : (
-            <MovieInfo
-              imdbRating={imdbRating}
-              rtRating={rtRating}
-              title={title}
-              poster={poster}
-              storyLine={storyLine}
-              type={type}
-              year={year}
-              genre={genre}
-              time={time}
-            />
-          )}
-        </ImageBackground>
-      </Animatable.View>
-    </SafeAreaView>
+            {title == "" ? (
+              <MovieTrending trending={trendingMovies} />
+            ) : (
+              <MovieInfo
+                imdbRating={imdbRating}
+                rtRating={rtRating}
+                title={title}
+                poster={poster}
+                storyLine={storyLine}
+                type={type}
+                year={year}
+                genre={genre}
+                time={time}
+              />
+            )}
+          </ImageBackground>
+        </Animatable.View>
+      </SafeAreaView>
+    </MovieFromTrending.Provider>
   );
 }
 
