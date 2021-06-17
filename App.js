@@ -114,12 +114,17 @@ export default function App() {
     getMovieInfo(title);
   };
 
+  const onPressHome = () => {
+    setTitle("");
+  };
+
   return (
     <View style={styles.container}>
       <AppHeader
         value={movieTitle}
         onChangeText={(title) => setMovieTitle(title)}
         getMovieInfo={() => getMovieInfo(movieTitle)}
+        onPressHome={onPressHome}
       />
       <ScrollView>
         <Animatable.View animation="fadeIn" duration={3000}>

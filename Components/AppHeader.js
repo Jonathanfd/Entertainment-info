@@ -1,11 +1,13 @@
 import React from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-function AppHeader({ movieTitle, onChangeText, getMovieInfo }) {
+function AppHeader({ movieTitle, onChangeText, getMovieInfo, onPressHome }) {
   return (
     <View style={styles.container}>
-      <MaterialCommunityIcons name="movie-open" size={55} color="#FF9F00" />
+      <TouchableOpacity onPress={onPressHome}>
+        <MaterialCommunityIcons name="movie-open" size={55} color="#FF9F00" />
+      </TouchableOpacity>
       <View style={styles.inputContainer}>
         <MaterialCommunityIcons name="cloud-search" size={24} color="#FF9F00" />
         <TextInput
