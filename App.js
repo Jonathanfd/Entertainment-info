@@ -9,6 +9,8 @@ import {
   View,
   StatusBar,
 } from "react-native";
+
+import { AppLoading } from "expo";
 import * as Animatable from "react-native-animatable";
 import Constants from "expo-constants";
 //import { LinearGradient } from "expo-linear-gradient";
