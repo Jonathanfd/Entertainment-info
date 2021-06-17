@@ -4,7 +4,9 @@ import {
   Alert,
   ImageBackground,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
+  View,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import Constants from "expo-constants";
@@ -113,15 +115,14 @@ export default function App() {
   };
 
   return (
-    <MovieFromTrending.Provider value={{ selectMovieFromTrending }}>
-      <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <AppHeader
+        value={movieTitle}
+        onChangeText={(title) => setMovieTitle(title)}
+        getMovieInfo={() => getMovieInfo(movieTitle)}
+      />
+      <ScrollView>
         <Animatable.View animation="fadeIn" duration={3000}>
-          <AppHeader
-            value={movieTitle}
-            onChangeText={(title) => setMovieTitle(title)}
-            getMovieInfo={() => getMovieInfo(movieTitle)}
-          />
-
           <ImageBackground
             source={require("./assets/background.jpg")}
             style={styles.imgContainer}
@@ -131,25 +132,27 @@ export default function App() {
               size="large"
               animating={loading}
             />
-            {title == "" ? (
-              <MovieTrending trending={trendingMovies} />
-            ) : (
-              <MovieInfo
-                imdbRating={imdbRating}
-                rtRating={rtRating}
-                title={title}
-                poster={poster}
-                storyLine={storyLine}
-                type={type}
-                year={year}
-                genre={genre}
-                time={time}
-              />
-            )}
+            <MovieFromTrending.Provider value={{ selectMovieFromTrending }}>
+              {title == "" ? (
+                <MovieTrending trending={trendingMovies} />
+              ) : (
+                <MovieInfo
+                  imdbRating={imdbRating}
+                  rtRating={rtRating}
+                  title={title}
+                  poster={poster}
+                  storyLine={storyLine}
+                  type={type}
+                  year={year}
+                  genre={genre}
+                  time={time}
+                />
+              )}
+            </MovieFromTrending.Provider>
           </ImageBackground>
         </Animatable.View>
-      </SafeAreaView>
-    </MovieFromTrending.Provider>
+      </ScrollView>
+    </View>
   );
 }
 

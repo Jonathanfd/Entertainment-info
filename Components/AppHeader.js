@@ -23,7 +23,7 @@ function AppHeader({ movieTitle, onChangeText, getMovieInfo }) {
 }
 const styles = StyleSheet.create({
   container: {
-    height: "10%",
+    height: 100,
     backgroundColor: "black",
     alignItems: "center",
     flexDirection: "row",
