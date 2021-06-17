@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
+  Dimensions,
   ImageBackground,
   SafeAreaView,
   ScrollView,
@@ -139,7 +140,9 @@ export default function App() {
             />
             <MovieFromTrending.Provider value={{ selectMovieFromTrending }}>
               {title == "" ? (
-                <MovieTrending trending={trendingMovies} />
+                <View style={{ height: Dimensions.get("screen").height }}>
+                  <MovieTrending trending={trendingMovies} />
+                </View>
               ) : (
                 <MovieInfo
                   imdbRating={imdbRating}
