@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
+  Dimensions,
   ImageBackground,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   View,
+  StatusBar,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import Constants from "expo-constants";
@@ -114,12 +115,18 @@ export default function App() {
     getMovieInfo(title);
   };
 
+  const onPressHome = () => {
+    setTitle("");
+  };
+
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" translucent />
       <AppHeader
         value={movieTitle}
         onChangeText={(title) => setMovieTitle(title)}
         getMovieInfo={() => getMovieInfo(movieTitle)}
+        onPressHome={onPressHome}
       />
       <ScrollView>
         <Animatable.View animation="fadeIn" duration={3000}>
@@ -134,7 +141,9 @@ export default function App() {
             />
             <MovieFromTrending.Provider value={{ selectMovieFromTrending }}>
               {title == "" ? (
-                <MovieTrending trending={trendingMovies} />
+                <View style={{ height: Dimensions.get("screen").height }}>
+                  <MovieTrending trending={trendingMovies} />
+                </View>
               ) : (
                 <MovieInfo
                   imdbRating={imdbRating}
